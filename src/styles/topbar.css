@@ -1,0 +1,238 @@
+
+.user-profile-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* User Icon Button */
+.user-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.user-icon-btn:hover {
+  transform: scale(1.05);
+}
+
+/* User Avatar */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fff2e6 6%, #f97415 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    border: 2px solid rgb(255 242 230);
+    box-shadow: 0 2px 8px rgb(249 116 21);
+    transition: all 0.3s ease;
+}
+
+.user-icon-btn:hover .user-avatar {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Dropdown Menu */
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 0.8rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  min-width: 280px;
+  margin-top: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.user-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Dropdown Header */
+.dropdown-header {
+  padding: 1rem;
+  background: linear-gradient(135deg, #fff2e6 -24%, #f97415 115%);
+}
+
+.dropdown-user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dropdown-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.dropdown-text {
+  flex: 1;
+}
+
+.dropdown-email {
+  color: white;
+  font-weight: 600;
+  margin: 0;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+.dropdown-status {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  margin: 0.2rem 0 0 0;
+}
+
+/* Dropdown Divider */
+.dropdown-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 0;
+}
+
+/* Dropdown Items */
+.dropdown-item {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: none;
+  background: white;
+  color: #333;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dropdown-item svg {
+  width: 18px;
+  height: 18px;
+  color: #667eea;
+  flex-shrink: 0;
+}
+
+.dropdown-item:hover {
+  background: #f8f8f8;
+  color: #667eea;
+  padding-left: 1.25rem;
+}
+
+.dropdown-item:first-of-type {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Logout Item */
+.dropdown-item.logout-item {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  color: #e74c3c;
+}
+
+.dropdown-item.logout-item svg {
+  color: #e74c3c;
+}
+
+.dropdown-item.logout-item:hover {
+  background: #ffe8e8;
+  color: #c0392b;
+}
+
+.dropdown-item.logout-item:hover svg {
+  color: #c0392b;
+}
+
+/* ========================================
+   Topbar Layout
+   ======================================== */
+
+.topbar {
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.topbar-content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.user-email {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #666;
+  hidden: overflow;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+  .user-email {
+    display: none;
+  }
+
+  .user-dropdown {
+    min-width: 250px;
+  }
+
+  .dropdown-email {
+    font-size: 0.9rem;
+  }
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-dropdown.open {
+  animation: slideDown 0.3s ease;
+}
