@@ -80,8 +80,6 @@ const Tasks = () => {
                     <Footer />
                 </div>
             </div>
-
-
         </>
     );
 };

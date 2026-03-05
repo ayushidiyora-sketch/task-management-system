@@ -150,7 +150,7 @@ function StatCard({ title, value, icon, success, warning, danger }) {
 
 function TaskCard({ title, desc, status, priority, date, done }) {
     return (
-        <div className="task-card">
+        <div className="task-card mt-3">
             <div>
                 <h6 className={done ? "text-decoration-line-through" : ""}>
                     {title}

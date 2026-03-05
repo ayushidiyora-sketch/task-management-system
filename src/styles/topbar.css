@@ -3,6 +3,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
 /* User Icon Button */
@@ -212,6 +213,8 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+      justify-content: space-between;
+    width: 100%;
 }
 
 .user-email {
@@ -225,8 +228,68 @@
 }
 
 /* ========================================
-   Notification Bell
+   Search Field
    ======================================== */
+
+.search-wrapper {
+  flex: 1;
+  max-width: 300px;
+  margin: 0 1rem;
+}
+
+.search-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+}
+
+.search-input-container:focus-within {
+  background: #fff;
+  border: 1px solid #f97415;
+  box-shadow: 0 0 0 3px rgba(249, 116, 21, 0.1);
+}
+
+.search-icon {
+  color: #999;
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 14px;
+  color: #333;
+  placeholder-color: #999;
+  min-width: 0;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.search-clear-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  transition: color 0.2s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.search-clear-btn:hover {
+  color: #666;
+}
 
 .notification-wrapper {
   position: relative;
@@ -245,7 +308,7 @@
   color: #666;
   transition: all 0.2s ease;
   position: relative;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
 }
 
 .notification-btn:hover {
@@ -271,9 +334,9 @@
 
 /* Notification Dropdown */
 .notification-dropdown {
-      position: absolute;
-    top: 15px;
-    left: -89px;
+    position: absolute;
+        top: 38px;
+    left: -316px;
     background: white;
     border-radius: 0.8rem;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
@@ -450,17 +513,28 @@
 
   .notification-dropdown {
     min-width: 280px;
-    left: 100px;
+    left: -268px;
   }
 
   .notification-list {
     max-height: 300px;
   }
+
+  .search-wrapper {
+    flex: 0 1 200px;
+    max-width: 200px;
+    margin: 0 0.5rem;
+    display: none;
+  }
+
+  .search-input {
+    font-size: 13px;
+  }
 }
 @media (max-width: 767px) {
     .notification-dropdown {
         min-width: 280px;
-        left: -93px;
+        left: -249px;
     }
 }
 /* ========================================

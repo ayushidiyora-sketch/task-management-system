@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import "../styles/settings.css";
 import { UserContext } from "../context/UserContext";
-import { FiSave } from "react-icons/fi";
+import { FiSave, FiLock } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import Footer from '../components/Footer';
 
@@ -18,9 +18,19 @@ const Settings = () => {
   });
  const navigate = useNavigate();
  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSaveProfile = (e) => {
@@ -30,6 +40,30 @@ const Settings = () => {
     console.log("Updated Profile:", profile);
 
     alert("Profile updated successfully!");
+  };
+
+  const handleSavePassword = (e) => {
+    e.preventDefault();
+    const storedPassword = localStorage.getItem("userPassword");
+
+    if (passwordData.currentPassword !== storedPassword) {
+      alert("Current password is incorrect");
+      return;
+    }
+
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      alert("New passwords do not match");
+      return;
+    }
+
+    if (passwordData.newPassword.length < 6) {
+      alert("New password must be at least 6 characters");
+      return;
+    }
+
+    localStorage.setItem("userPassword", passwordData.newPassword);
+    alert("Password changed successfully!");
+    setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
   };
 
   const handleLogout = () => {
@@ -51,18 +85,7 @@ const Settings = () => {
         <div className="dashboard-content settings-page">
           <h1>Settings</h1>
 
-          {/* Account Info */}
-          {/* <div className="settings-card">
-            <h3>Account Information</h3>
-            <p>
-              <strong>Email:</strong> {profile.email || "Guest"}
-            </p>
-            <button className="btn btn-logout" onClick={handleLogout}>
-              Logout
-            </button>
-          </div> */}
-
-          {/* Profile Edit */}
+   
           <div className="settings-card">
             <h3>Edit Profile</h3>
 
@@ -119,11 +142,7 @@ const Settings = () => {
             </form>
           </div>
 
-          {/* Preferences */}
-          {/* <div className="settings-card">
-            <h3>Preferences</h3>
-            <p>Coming soon...</p>
-          </div> */}
+  
         </div>
             <Footer />
       </div>

@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Menu, Bell } from "lucide-react";
+import { Menu, Bell, Search, X } from "lucide-react";
 import "../styles/topbar.css";
 
 function Topbar({ onMenuClick }) {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Sample notifications
   const [notifications] = useState([
@@ -19,6 +20,15 @@ function Topbar({ onMenuClick }) {
 
   // ✅ fetch email from localStorage
   const userEmail = localStorage.getItem("userEmail");
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    // Add search functionality here
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
@@ -45,51 +55,38 @@ function Topbar({ onMenuClick }) {
           <Menu size={24} />
         </button>
 
-        {/* Notification Bell */}
-        <div className="notification-wrapper">
-         
-
-          {/* Notification Dropdown */}
-          <div
-            className={`notification-dropdown ${isNotificationOpen ? "open" : ""}`}
-            onMouseEnter={() => setIsNotificationOpen(true)}
-            onMouseLeave={() => setIsNotificationOpen(false)}
-          >
-            <div className="notification-header">
-              <h6>Notifications</h6>
-              {unreadCount > 0 && <span className="unread-badge">{unreadCount} new</span>}
-            </div>
-
-            <div className="notification-list">
-              {notifications.length > 0 ? (
-                notifications.map((notification) => (
-                  <div key={notification.id} className={`notification-item ${notification.type}`}>
-                    <div className="notification-dot"></div>
-                    <div className="notification-content">
-                      <p className="notification-message">{notification.message}</p>
-                      <span className="notification-time">{notification.time}</span>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="notification-empty">
-                  <p>No notifications</p>
-                </div>
-              )}
-            </div>
-
-            <div className="notification-footer">
-              <button className="view-all-btn">View All Notifications</button>
-            </div>
+        {/* Search Field */}
+        <div className="search-wrapper">
+          <div className="search-input-container">
+            <Search size={18} className="search-icon" />
+            <input
+              type="text"
+              placeholder="Search tasks..."
+              value={searchQuery}
+              onChange={handleSearch}
+              className="search-input"
+            />
+            {searchQuery && (
+              <button
+                onClick={handleClearSearch}
+                className="search-clear-btn"
+                aria-label="Clear search"
+              >
+                <X size={16} />
+              </button>
+            )}
           </div>
         </div>
 
-        <span className="user-email">
-          {userEmail || "Guest"}
-        </span>
+        {/* Notification Bell */}
+     
+      
 
         {/* User Profile Icon with Dropdown */}
         <div className="user-profile-wrapper">
+            <span className="user-email">
+          {userEmail || "Guest"}
+        </span>
           <button
             className="user-icon-btn"
             onMouseEnter={() => setIsDropdownOpen(true)}
@@ -152,7 +149,8 @@ function Topbar({ onMenuClick }) {
               Logout
             </button>
           </div>
-           <button
+             <div className="notification-wrapper">
+          <button
             className="notification-btn"
             onMouseEnter={() => setIsNotificationOpen(true)}
             onMouseLeave={() => setIsNotificationOpen(false)}
@@ -161,6 +159,42 @@ function Topbar({ onMenuClick }) {
             <Bell size={20} />
             {unreadCount > 0 && <span className="notification-badge">{unreadCount}</span>}
           </button>
+
+      
+          <div
+            className={`notification-dropdown ${isNotificationOpen ? "open" : ""}`}
+            onMouseEnter={() => setIsNotificationOpen(true)}
+            onMouseLeave={() => setIsNotificationOpen(false)}
+          >
+            <div className="notification-header">
+              <h6>Notifications</h6>
+              {unreadCount > 0 && <span className="unread-badge">{unreadCount} new</span>}
+            </div>
+
+            <div className="notification-list">
+              {notifications.length > 0 ? (
+                notifications.map((notification) => (
+                  <div key={notification.id} className={`notification-item ${notification.type}`}>
+                    <div className="notification-dot"></div>
+                    <div className="notification-content">
+                      <p className="notification-message">{notification.message}</p>
+                      <span className="notification-time">{notification.time}</span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="notification-empty">
+                  <p>No notifications</p>
+                </div>
+              )}
+            </div>
+
+            <div className="notification-footer">
+              <button className="view-all-btn">View All Notifications</button>
+            </div>
+          </div>
+        </div>
+
         </div>
       </div>
     </div>
