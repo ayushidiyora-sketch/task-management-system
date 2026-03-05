@@ -7,7 +7,7 @@ import { FiSave } from "react-icons/fi";
 
 const Settings = () => {
   const { user } = useContext(UserContext);
-
+ const userEmail = localStorage.getItem("userEmail");
   const [profile, setProfile] = useState({
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
@@ -89,7 +89,7 @@ const Settings = () => {
                 <input
                   type="email"
                   name="email"
-                  value={profile.email}
+                  value=  {userEmail || "Guest"}
                   onChange={handleChange}
                   disabled
                 />

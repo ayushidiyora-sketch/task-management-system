@@ -5,13 +5,15 @@ import '../styles/tasks.css';
 import Topbar from '../components/Topbar';
 import Sidebar from '../components/Sidebar';
 import { UserContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const Tasks = () => {
     const { tasks, addTask, updateTask, deleteTask, toggleTaskStatus } = useContext(UserContext);
     const [filter, setFilter] = useState('all');
     const [editingTask, setEditingTask] = useState(null);
     const [selectedTask, setSelectedTask] = useState(null);
-
+     const navigate = useNavigate();
+ const [sidebarOpen, setSidebarOpen] = useState(true);
     const getFilteredTasks = () => {
         switch (filter) {
             case 'completed':
@@ -28,14 +30,17 @@ const Tasks = () => {
     };
 
     const filteredTasks = getFilteredTasks();
-
+  const toggleSidebar = () => {
+        setSidebarOpen(prev => !prev);
+    };
     return (
         <div className="dashboard-layout">
-            <Sidebar />
+                 <Sidebar isOpen={sidebarOpen} onClose={toggleSidebar} />
+            {/* overlay for mobile menu */}
+            <div className={`overlay ${sidebarOpen ? "show" : ""}`} onClick={toggleSidebar}></div>
 
             <div className="dashboard-main">
-                <Topbar />
-
+                 <Topbar onMenuClick={toggleSidebar} />
 
 
                 <div className="dashboard-content">

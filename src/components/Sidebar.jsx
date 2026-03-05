@@ -7,9 +7,10 @@ import {
 } from "lucide-react";
 import "../styles/login.css";
 
-function Sidebar() {
+function Sidebar({ isOpen = true, onClose = () => {} }) {
+  // allow parent to control visibility on small screens
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isOpen ? "" : "collapsed"}`}>
       <div className="sidebar-logo">
         <span className="logo-icon">
           <CheckSquare size={24} />
@@ -18,22 +19,22 @@ function Sidebar() {
       </div>
 
       <nav className="sidebar-menu">
-        <NavLink to="/dashboard" className="menu-item">
+        <NavLink to="/dashboard" className="menu-item" onClick={onClose}>
           <LayoutDashboard size={18} />
           <span>Dashboard</span>
         </NavLink>
 
-        <NavLink to="/tasks" className="menu-item">
+        <NavLink to="/tasks" className="menu-item" onClick={onClose}>
           <CheckSquare size={18} />
           <span>Tasks</span>
         </NavLink>
 
-        <NavLink to="/analytics" className="menu-item">
+        {/* <NavLink to="/analytics" className="menu-item" onClick={onClose}>
           <BarChart3 size={18} />
           <span>Analytics</span>
-        </NavLink>
+        </NavLink> */}
 
-        <NavLink to="/settings" className="menu-item">
+        <NavLink to="/settings" className="menu-item" onClick={onClose}>
           <Settings size={18} />
           <span>Settings</span>
         </NavLink>

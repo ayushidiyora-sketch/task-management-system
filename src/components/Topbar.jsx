@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Menu } from "lucide-react";
 import "../styles/topbar.css";
 
-function Topbar() {
+function Topbar({ onMenuClick }) {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -29,6 +30,10 @@ function Topbar() {
   return (
     <div className="topbar">
       <div className="topbar-content">
+        {/* menu button for mobile */}
+        <button className="menu-btn" onClick={onMenuClick} aria-label="Toggle menu">
+          <Menu size={24} />
+        </button>
         <span className="user-email">
           {userEmail || "Guest"}
         </span>

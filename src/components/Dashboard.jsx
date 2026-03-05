@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import "../styles/login.css";
@@ -7,13 +8,21 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 function Dashboard() {
     const navigate = useNavigate();
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+
+    const toggleSidebar = () => {
+        setSidebarOpen(prev => !prev);
+    };
+
     return (
 
 
         <div className="dashboard-layout">
-            <Sidebar />
+            <Sidebar isOpen={sidebarOpen} onClose={toggleSidebar} />
+            {/* overlay for mobile menu */}
+            <div className={`overlay ${sidebarOpen ? "show" : ""}`} onClick={toggleSidebar}></div>
             <div className="dashboard-main">
-                <Topbar />
+                <Topbar onMenuClick={toggleSidebar} />
                 <div className="dashboard-content">
                     {/* STATS */}
                     <div className="stats-row">
@@ -90,7 +99,7 @@ const totalIcon = (
         padding: "13px 8px",
         background: "rgb(249, 116, 21)",
         borderRadius: "10px",
-    }} stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list h-5 w-5  shrink-0"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4"></path><path d="M12 16h4"></path><path d="M8 11h.01"></path><path d="M8 16h.01"></path></svg>
+    }} stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-clipboard-list shrink-0"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4"></path><path d="M12 16h4"></path><path d="M8 11h.01"></path><path d="M8 16h.01"></path></svg>
 );
 
 const completedIcon = (
@@ -98,7 +107,7 @@ const completedIcon = (
         padding: "13px 8px",
         background: "rgb(249, 116, 21)",
         borderRadius: "10px",
-    }} stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big h-5 w-5  shrink-0"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>
+    }} stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-circle-check-big shrink-0"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>
 );
 
 const pendingIcon = (
@@ -106,7 +115,7 @@ const pendingIcon = (
         padding: "13px 8px",
         background: "rgb(249, 116, 21)",
         borderRadius: "10px",
-    }} stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock h-5 w-5  shrink-0"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+    }} stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-clock shrink-0"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
 );
 
 const priorityIcon = (
@@ -114,7 +123,7 @@ const priorityIcon = (
         padding: "13px 8px",
         background: "rgb(249, 116, 21)",
         borderRadius: "10px",
-    }} stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert h-5 w-5  shrink-0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+    }} stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-triangle-alert shrink-0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
 );
 function StatCard({ title, value, icon, success, warning, danger }) {
     return (

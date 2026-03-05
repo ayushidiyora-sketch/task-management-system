@@ -184,6 +184,30 @@
   align-items: center;
 }
 
+.menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none; /* shown only on small screens via login.css */
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    justify-content: space-between;
+  }
+  .menu-btn {
+    display: block;
+  }
+  .topbar-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    justify-content: space-between;
+    width: 100%;
+}
+}
+
 .topbar-content {
   display: flex;
   align-items: center;
