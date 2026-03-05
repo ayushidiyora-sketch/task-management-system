@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FiPlus, FiSave, FiX } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 const TaskForm = ({ onSubmit, editingTask, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const TaskForm = ({ onSubmit, editingTask, onCancel }) => {
   });
 
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     if (editingTask) {
@@ -32,22 +34,27 @@ const TaskForm = ({ onSubmit, editingTask, onCancel }) => {
 
   const validateForm = () => {
     const newErrors = {};
+
     if (!formData.title.trim()) {
       newErrors.title = 'Task title is required';
     }
-    if (!formData.description.trim()){
-        newErrors.description = 'task descripition is required';
+
+    if (!formData.description.trim()) {
+      newErrors.description = 'Task description is required';
     }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: "",
@@ -63,8 +70,10 @@ const TaskForm = ({ onSubmit, editingTask, onCancel }) => {
 
     if (editingTask) {
       onSubmit(editingTask.id, formData);
+      setSuccessMessage("Task updated successfully!");
     } else {
       onSubmit(formData);
+      setSuccessMessage("Task added successfully!");
     }
 
     setFormData({
@@ -73,16 +82,24 @@ const TaskForm = ({ onSubmit, editingTask, onCancel }) => {
       priority: 'Medium',
       dueDate: '',
     });
+
+    setTimeout(() => {
+      setSuccessMessage("");
+    }, 3000);
   };
 
   return (
     <div className="task-form-container">
+ {successMessage && (
+        <div className="success-message">
+          {successMessage}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="task-form">
+
         {/* Task Title */}
         <div className="form-group">
-          {/* <label htmlFor="title" className="form-label">
-            Task Title <span className="required">*</span>
-          </label> */}
           <input
             type="text"
             id="title"
@@ -92,14 +109,13 @@ const TaskForm = ({ onSubmit, editingTask, onCancel }) => {
             placeholder="Enter task title"
             className={`form-input ${errors.title ? 'error' : ''}`}
           />
-          {errors.title && <span className="error-message">{errors.title}</span>}
+          {errors.title && (
+            <span className="error-message">{errors.title}</span>
+          )}
         </div>
 
         {/* Description */}
         <div className="form-group">
-          {/* <label htmlFor="description" className="form-label">
-            Description
-          </label> */}
           <textarea
             id="description"
             name="description"
@@ -109,76 +125,76 @@ const TaskForm = ({ onSubmit, editingTask, onCancel }) => {
             rows="3"
             className={`form-input form-textarea ${errors.description ? 'error' : ''}`}
           />
-          {errors.description && <span className="error-message">{errors.description}</span>}
-        </div>
-<div className="task-form-d-flex">
- {/* Priority */}
-        <div className="form-group w-50">
-          {/* <label htmlFor="priority" className="form-label">
-            Priority Level
-          </label> */}
-          <select
-            id="priority"
-            name="priority"
-            value={formData.priority}
-            onChange={handleChange}
-            className="form-input form-select"
-          >
-            <option value="Low"> Low</option>
-            <option value="Medium"> Medium</option>
-            <option value="High"> High</option>
-          </select>
+          {errors.description && (
+            <span className="error-message">{errors.description}</span>
+          )}
         </div>
 
-        {/* Due Date */}
-        <div className="form-group w-50">
-          {/* <label htmlFor="dueDate" className="form-label">
-            Due Date
-          </label> */}
-          <input
-            type="date"
-            id="dueDate"
-            name="dueDate"
-            value={formData.dueDate}
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
+        <div className="task-form-d-flex">
 
-</div>
-       
+          {/* Priority */}
+          <div className="form-group w-50">
+            <select
+              id="priority"
+              name="priority"
+              value={formData.priority}
+              onChange={handleChange}
+              className="form-input form-select"
+            >
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+
+          {/* Due Date */}
+          <div className="form-group w-50">
+            <input
+              type="date"
+              id="dueDate"
+              name="dueDate"
+              value={formData.dueDate}
+              onChange={handleChange}
+              className="form-input"
+            />
+          </div>
+
+        </div>
 
         {/* Buttons */}
-       <div className="form-buttons">
-  <button type="submit" className="btn btn-primary">
-    <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      {editingTask ? (
-        <>
-          <FiSave size={18} />
-          Update Task
-        </>
-      ) : (
-        <>
-          <FiPlus size={18} />
-          Add Task
-        </>
-      )}
-    </span>
-  </button>
+        <div className="form-buttons">
 
-  {editingTask && (
-    <button
-      type="button"
-      onClick={onCancel}
-      className="btn btn-secondary"
-    >
-      <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <FiX size={16} />
-        Cancel
-      </span>
-    </button>
-  )}
-</div>
+          <button type="submit" className="btn btn-addtask">
+            <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              {editingTask ? (
+                <>
+                  <FiSave size={18} />
+                  Update Task
+                </>
+              ) : (
+                <>
+                  <FiPlus size={18} />
+                  Add Task
+                </>
+              )}
+            </span>
+          </button>
+
+          {editingTask && (
+            <button
+              type="button"
+              onClick={onCancel}
+              className="btn btn-secondary"
+            >
+              <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <FiX size={16} />
+                Cancel
+              </span>
+            </button>
+          )}
+
+        </div>
+
       </form>
     </div>
   );

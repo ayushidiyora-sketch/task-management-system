@@ -361,6 +361,18 @@ p.title-dashbord {
   font-size: 12px;
   color: #6b7280;
 }
+
+/* global app footer */
+.app-footer {
+  text-align: left;
+  padding: 16px 10px;
+  font-size: 16px;
+  color: black;
+  background: #fff;
+  border-top: 1px solid #eee;
+  margin-top: 24px;
+}
+
 .pie-label {
   position: absolute;
   font-size: 12px;

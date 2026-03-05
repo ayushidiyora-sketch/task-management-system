@@ -5,6 +5,7 @@ import "../styles/login.css";
 import TaskPieChart from "./TaskPieChart";
 import { FiPlus } from "react-icons/fi";
 import { Navigate, useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -58,7 +59,7 @@ function Dashboard() {
                     </div>
 
                     {/* ADD TASK */}
-              
+
 
                     <div
                         className="add-task"
@@ -90,7 +91,9 @@ function Dashboard() {
 
                 </div>
 
+                <Footer />
             </div>
+
         </div>
     );
 }

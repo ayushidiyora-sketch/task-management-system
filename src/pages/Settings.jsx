@@ -4,6 +4,8 @@ import Topbar from "../components/Topbar";
 import "../styles/settings.css";
 import { UserContext } from "../context/UserContext";
 import { FiSave } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import Footer from '../components/Footer';
 
 const Settings = () => {
   const { user } = useContext(UserContext);
@@ -14,7 +16,8 @@ const Settings = () => {
     email: user?.email || localStorage.getItem("userEmail") || "",
     phone: user?.phone || "",
   });
-
+ const navigate = useNavigate();
+ const [sidebarOpen, setSidebarOpen] = useState(true);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile((prev) => ({ ...prev, [name]: value }));
@@ -34,12 +37,16 @@ const Settings = () => {
     localStorage.removeItem("userEmail");
     window.location.href = "/login";
   };
-
+  const toggleSidebar = () => {
+        setSidebarOpen(prev => !prev);
+    };
   return (
     <div className="dashboard-layout">
-      <Sidebar />
+      <Sidebar isOpen={sidebarOpen} onClose={toggleSidebar} />
+            {/* overlay for mobile menu */}
+            <div className={`overlay ${sidebarOpen ? "show" : ""}`} onClick={toggleSidebar}></div>
       <div className="dashboard-main">
-        <Topbar />
+       <Topbar onMenuClick={toggleSidebar} />
 
         <div className="dashboard-content settings-page">
           <h1>Settings</h1>
@@ -106,7 +113,7 @@ const Settings = () => {
                 />
               </div>
 
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-addtask">
                 <FiSave size={16} /> Save Changes
               </button>
             </form>
@@ -118,7 +125,9 @@ const Settings = () => {
             <p>Coming soon...</p>
           </div> */}
         </div>
+            <Footer />
       </div>
+    
     </div>
   );
 };

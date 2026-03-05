@@ -1,11 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Menu } from "lucide-react";
+import { Menu, Bell } from "lucide-react";
 import "../styles/topbar.css";
 
 function Topbar({ onMenuClick }) {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  // Sample notifications
+  const [notifications] = useState([
+    { id: 1, message: "Task 'Fix login bug' marked as completed", time: "2 min ago", type: "completed" },
+    { id: 2, message: "New high priority task assigned to you", time: "15 min ago", type: "high-priority" },
+    { id: 3, message: "Task 'Design landing page' due tomorrow", time: "1 hour ago", type: "due-soon" }
+  ]);
+
+  const unreadCount = notifications.length;
 
   // ✅ fetch email from localStorage
   const userEmail = localStorage.getItem("userEmail");
@@ -34,6 +44,46 @@ function Topbar({ onMenuClick }) {
         <button className="menu-btn" onClick={onMenuClick} aria-label="Toggle menu">
           <Menu size={24} />
         </button>
+
+        {/* Notification Bell */}
+        <div className="notification-wrapper">
+         
+
+          {/* Notification Dropdown */}
+          <div
+            className={`notification-dropdown ${isNotificationOpen ? "open" : ""}`}
+            onMouseEnter={() => setIsNotificationOpen(true)}
+            onMouseLeave={() => setIsNotificationOpen(false)}
+          >
+            <div className="notification-header">
+              <h6>Notifications</h6>
+              {unreadCount > 0 && <span className="unread-badge">{unreadCount} new</span>}
+            </div>
+
+            <div className="notification-list">
+              {notifications.length > 0 ? (
+                notifications.map((notification) => (
+                  <div key={notification.id} className={`notification-item ${notification.type}`}>
+                    <div className="notification-dot"></div>
+                    <div className="notification-content">
+                      <p className="notification-message">{notification.message}</p>
+                      <span className="notification-time">{notification.time}</span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="notification-empty">
+                  <p>No notifications</p>
+                </div>
+              )}
+            </div>
+
+            <div className="notification-footer">
+              <button className="view-all-btn">View All Notifications</button>
+            </div>
+          </div>
+        </div>
+
         <span className="user-email">
           {userEmail || "Guest"}
         </span>
@@ -102,6 +152,15 @@ function Topbar({ onMenuClick }) {
               Logout
             </button>
           </div>
+           <button
+            className="notification-btn"
+            onMouseEnter={() => setIsNotificationOpen(true)}
+            onMouseLeave={() => setIsNotificationOpen(false)}
+            aria-label="Notifications"
+          >
+            <Bell size={20} />
+            {unreadCount > 0 && <span className="notification-badge">{unreadCount}</span>}
+          </button>
         </div>
       </div>
     </div>
